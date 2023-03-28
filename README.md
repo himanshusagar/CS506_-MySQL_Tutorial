@@ -6,7 +6,7 @@ Pictorially,
 
 ![goal.jpg](images/goal.jpg)
 
-This tutorial assume students have access to Remote Machine(RM)
+This tutorial assume students have access to Remote Machine(RM) i.e cs506-team-XX.cs.wisc.edu
 
 ### 0. Install Docker on Remote Machine(RM)
 Refer to this tutorial for installing and learning basics of Docker
@@ -18,7 +18,7 @@ Refer to this link for downloading and installing Workbench - https://www.mysql.
 ### 2. On Remote machine
 #### 2.1 SSH to Remote Machine
 ```shell
-ssh hsagar2@cs506-team-00.cs.wisc.edu
+ssh hsagar2@cs506-team-XX.cs.wisc.edu
 ````
 #### 2.2 Run Docker Container
 This command creates docker container and maps container's 3306 port to remote machine
@@ -117,3 +117,23 @@ SELECT * FROM visitors;
 3. Click on Apply. Result window should look like this:
    ![result.png](images/result.png)
 
+
+### 4. On Remote machine
+Let's verify whether we actually modified database inside docker container.
+1. SSH to remote machine. 
+```shell
+ssh hsagar2@cs506-team-00.cs.wisc.edu
+````
+2. Run Bash Shell inside container
+```shell
+docker exec -it simple_mysql /bin/bash
+```
+3. Run MySQL Client.
+```shell
+mysql -u  root -p
+```
+3. Check Visitors Table as below. 
+```sql
+SELECT * from simple_db.visitors;
+```
+![double_check.png](images/double_check.png)
