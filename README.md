@@ -107,7 +107,7 @@ Now, you should have connection to DB.
    ![verify.png](images/verify.png)
 
 #### 3.3 Using Query Files
-1. Cick on Query_1 window(It could be Query_2,3,4 etc as well).
+1. Click on Query_1 window(It could be Query_2,3,4 etc as well).
 2. Insert some data into visitors table using following lines. Copy-Paste them into query window.
 ```sql
 USE simple_db;
