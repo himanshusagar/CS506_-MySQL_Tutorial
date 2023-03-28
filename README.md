@@ -4,7 +4,7 @@ Objective:
 To demonstrate accessing mysql database hosted on remote machine's docker container from mysql worbench installed on local machine.
 Pictorially,
 
-![goal.png](images/goal.jpg)
+![goal.jpg](images/goal.jpg)
 
 This tutorial assume students have access to Remote Machine(RM)
 
