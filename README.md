@@ -21,26 +21,54 @@ Refer to this link for downloading and installing Workbench - https://www.mysql.
 ssh hsagar2@cs506-team-XX.cs.wisc.edu
 ````
 #### 2.2 Run Docker Container
-This command creates docker container and maps container's 3306 port to remote machine
-s 3306 port. You may want to use volumes to persist data! - https://github.com/himanshusagar/CS506_Docker_Tutorial.
+1. Read through yaml file provided with tutorial - docker-compose.yml. Your teams' machines should have containers spawned by following
+yaml already. If not, you can run them using `docker compose up`. Notice:
+   1. db2 is mysql container with
+      1. password : `splung3`
+      2. db name : `splunge_db`
+      3. root host : `'%'` (so that root can connect from any host. This will be helpful in connecting to DB from outside the container).
+      4. volumes mapping to `/var/lib/mysql`.
 
-`simple_pwd` is password of your DB. CHANGE IT!
-
-`simple_db` is name of your DB. CHANGE IT!
-
-```shell
-docker run --name simple_mysql --rm -e MYSQL_ROOT_PASSWORD=simple_pwd -e MYSQL_DATABASE=simple_db -e MYSQL_ROOT_HOST=%  -p 3306:3306 -it mysql
+```yaml
+version: '3.8'
+services:
+   db2:
+      image: mysql/mysql-server:latest
+      restart: always
+      environment:
+         MYSQL_ROOT_PASSWORD: splung3
+         MYSQL_DATABASE: splunge_db
+         MYSQL_ROOT_HOST: '%'
+      volumes:
+         - splungedat:/var/lib/mysql
+      ports:
+         - "60666:3306"
+   phpmyadmin2:
+      image: phpmyadmin/phpmyadmin:latest
+      restart: always
+      depends_on:
+         - db2
+      environment:
+         PMA_HOST: db2
+         PMA_USER: root
+         PMA_PASSWORD: splung3
+      ports:
+         - "60680:80"
+volumes:
+   splungedat:
 ```
+
+
 #### 2.3 Insert some data into DB
 1. Open new terminal, ssh into remote machine again!
 ```shell
-ssh hsagar2@cs506-team-00.cs.wisc.edu
+ssh hsagar2@cs506-team-XX.cs.wisc.edu
 ````
 2. SSH into container
 ```shell
-docker exec -it simple_mysql /bin/bash
+docker exec -it cs506_mysql_tutorial-db2-1 /bin/bash
 ```
-3. Connec to container's MySQL.
+3. Connect to container's MySQL.
 ```shell
 mysql -u root -p
 ```
@@ -48,10 +76,10 @@ mysql -u root -p
 5. Run following queries for dummy data.
 ```sql
 USE simple_db;
-CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
+CREATE TABLE teammates (id INT, name VARCHAR(20), email VARCHAR(20));
 SHOW TABLES;
-INSERT INTO authors (id,name,email) VALUES(1,"Himanshu Sagar","hsagar@abc.def");
-SELECT * from authors;
+INSERT INTO teammates (id,name,email) VALUES(1,"Himanshu Sagar","hsagar@abc.def");
+SELECT * from teammates;
 ```
 5. Quit MySQL prompt
 ```sql
@@ -68,7 +96,7 @@ Open a terminal.
 We need to SSH tunnel 3306 port of remote machine to local machine's 3306 port.
 Use your username and machine name instead of `hsagar2` and `cs506-team-XX` respectively.
 ```shell
-ssh -L 3306:cs506-team-XX.cs.wisc.edu:3306 hsagar2@cs506-team-XX.cs.wisc.edu
+ssh -L 60666:cs506-team-XX.cs.wisc.edu:60666 hsagar2@cs506-team-XX.cs.wisc.edu
 ```
 Enter CS Login Password and perform DUO authentication.
 
@@ -83,7 +111,7 @@ Open MySQL Workbench.
 
 0. Connection Method is Standard(TCP/IP)
 1. Hostname is `127.0.0.1`
-2. Port is `3306`
+2. Port is `60666`
 3. Username is `root`
 4. Password is the one you specified in step 2.2 Run Docker Container.
 
