@@ -22,7 +22,7 @@ ssh hsagar2@cs506-team-XX.cs.wisc.edu
 ````
 #### 2.2 Run Docker Container
 1. Read through yaml file provided with tutorial - docker-compose.yml. Your teams' machines should have containers spawned by following
-yaml already. If not, you can run them using `docker compose up`. Notice:
+yaml already. NO need to run this yaml file. Notice:
    1. db2 is mysql container with
       1. password : `splung3`
       2. db name : `splunge_db`
@@ -119,7 +119,7 @@ Step D: Click 'Ok'.
 Now, you should have connection to DB.
 ![window.jpg](images/window.jpg)
 
-#### 3.2 Create New Schema using WorkBench
+#### 3.3 Create New Schema using WorkBench
 1. Use Schema Browser on Left Panel to and expand your DB(simple_DB).
 2. Right Click on `Tables`.
 3. Click on `Create Tables`.
@@ -134,7 +134,7 @@ Now, you should have connection to DB.
 8. Verify Visitor's table in Left Panel Schema Browser.
    ![verify.png](images/verify.png)
 
-#### 3.3 Using Query Files
+#### 3.4 Using Query Files
 1. Click on Query_1 window(It could be Query_2,3,4 etc as well).
 2. Insert some data into visitors table using following lines. Copy-Paste them into query window.
 ```sql
